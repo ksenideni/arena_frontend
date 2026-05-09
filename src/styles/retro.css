@@ -1,0 +1,280 @@
+@import './tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--nes-bg);
+  color: var(--nes-text);
+  font-family: var(--font-text);
+  font-size: 22px;
+  line-height: 1.3;
+  image-rendering: pixelated;
+  /* Лёгкие scanlines поверх всего */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.0) 0px,
+    rgba(255, 255, 255, 0.0) 2px,
+    rgba(0, 0, 0, 0.18) 3px,
+    rgba(0, 0, 0, 0.0) 4px
+  );
+}
+
+/* Заголовки — пиксельным шрифтом */
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: normal;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+h1 { font-size: 22px; margin: 12px 0; }
+h2 { font-size: 16px; margin: 10px 0; }
+h3 { font-size: 12px; margin: 8px 0; }
+
+a {
+  color: var(--nes-cyan);
+  text-decoration: none;
+}
+a:hover { color: var(--nes-yellow); }
+
+button {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--nes-bg-soft);
+  color: var(--nes-text);
+  border: 2px solid var(--nes-border);
+  border-right-color: var(--nes-black);
+  border-bottom-color: var(--nes-black);
+  padding: 8px 14px;
+  cursor: pointer;
+  image-rendering: pixelated;
+}
+button:hover { background: var(--nes-border); color: var(--nes-yellow); }
+button:active {
+  border-color: var(--nes-black);
+  border-right-color: var(--nes-border);
+  border-bottom-color: var(--nes-border);
+}
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* «Пиксельная рамка»: внешняя двойная линия с углами */
+.nes-panel {
+  background: var(--nes-bg-soft);
+  border: 4px solid var(--nes-border-bright);
+  box-shadow: inset 0 0 0 2px var(--nes-black);
+  padding: 16px;
+  position: relative;
+}
+
+.nes-panel--accent {
+  border-color: var(--nes-yellow);
+}
+
+/* TabBar */
+.tabbar {
+  display: flex;
+  gap: 0;
+  border-bottom: 4px solid var(--nes-border-bright);
+  background: var(--nes-black);
+}
+.tabbar__tab {
+  font-family: var(--font-display);
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  color: var(--nes-text-dim);
+  border-right: 2px solid var(--nes-border);
+  cursor: pointer;
+  background: transparent;
+}
+.tabbar__tab--active {
+  color: var(--nes-yellow);
+  background: var(--nes-bg-soft);
+  border-bottom: 4px solid var(--nes-yellow);
+  margin-bottom: -4px;
+}
+.tabbar__tab--disabled {
+  color: var(--nes-border);
+  cursor: not-allowed;
+}
+
+/* Layout */
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__header {
+  background: var(--nes-black);
+  padding: 12px 24px 0;
+}
+
+.app__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--nes-yellow);
+  margin: 0 0 12px;
+  text-shadow: 2px 2px 0 var(--nes-red);
+}
+
+.app__main {
+  flex: 1;
+  padding: 24px;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Список матчей */
+.match-list { display: flex; flex-direction: column; gap: 12px; }
+.match-list__empty { font-family: var(--font-display); font-size: 12px; color: var(--nes-text-dim); }
+
+.match-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 18px;
+  cursor: pointer;
+  background: var(--nes-bg-soft);
+  border: 2px solid var(--nes-border);
+}
+.match-item:hover { border-color: var(--nes-yellow); }
+.match-item__id { font-family: var(--font-display); font-size: 10px; color: var(--nes-cyan); }
+.match-item__players { font-size: 18px; color: var(--nes-text); }
+.match-item__status { font-family: var(--font-display); font-size: 9px; padding: 4px 8px; }
+.match-item__status--active { color: var(--nes-black); background: var(--nes-green); }
+.match-item__status--finished { color: var(--nes-text); background: var(--nes-grey); }
+.match-item__round { font-family: var(--font-display); font-size: 10px; color: var(--nes-text-dim); }
+
+/* Match page layout */
+.match-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  align-items: start;
+}
+.match-page__board { display: flex; justify-content: center; }
+.match-page__side { display: flex; flex-direction: column; gap: 16px; }
+
+.match-page__title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--nes-yellow);
+  margin-bottom: 16px;
+}
+
+.match-page__back {
+  font-family: var(--font-display);
+  font-size: 10px;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+/* Canvas — pixelated */
+.match-board {
+  display: block;
+  image-rendering: pixelated;
+  background: #050a12;
+  border: 4px solid var(--nes-border-bright);
+  box-shadow: inset 0 0 0 2px var(--nes-black);
+}
+
+/* Scoreboard */
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.scoreboard__row {
+  display: grid;
+  grid-template-columns: 16px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 8px;
+  background: var(--nes-bg);
+  border-left: 4px solid var(--bot-color-0);
+}
+.scoreboard__chip {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+}
+.scoreboard__name { font-size: 18px; }
+.scoreboard__score { font-family: var(--font-display); font-size: 12px; color: var(--nes-yellow); }
+.scoreboard__row--leader { background: var(--nes-bg-soft); }
+
+/* Replay controls */
+.replay {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.replay__row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.replay__round {
+  font-family: var(--font-display);
+  font-size: 10px;
+  color: var(--nes-text-dim);
+}
+.replay__scrub {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  background: var(--nes-bg);
+  border: 2px solid var(--nes-border);
+  outline: none;
+}
+.replay__scrub::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 20px;
+  background: var(--nes-yellow);
+  border: 2px solid var(--nes-black);
+  cursor: pointer;
+}
+.replay__scrub::-moz-range-thumb {
+  width: 14px;
+  height: 20px;
+  background: var(--nes-yellow);
+  border: 2px solid var(--nes-black);
+  cursor: pointer;
+}
+
+/* Status badges */
+.status-pill {
+  font-family: var(--font-display);
+  font-size: 9px;
+  padding: 4px 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.status-pill--connecting { background: var(--nes-grey); color: var(--nes-black); }
+.status-pill--live { background: var(--nes-red); color: var(--nes-text); animation: blink 1s infinite step-end; }
+.status-pill--finished { background: var(--nes-grey); color: var(--nes-text); }
+.status-pill--error { background: var(--nes-red); color: var(--nes-text); }
+.status-pill--closed { background: var(--nes-grey); color: var(--nes-text); }
+
+@keyframes blink {
+  50% { opacity: 0.5; }
+}
+
+/* Loader / error */
+.center-msg {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--nes-text-dim);
+  text-align: center;
+  padding: 64px 16px;
+}

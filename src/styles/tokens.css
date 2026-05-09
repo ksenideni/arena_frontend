@@ -1,0 +1,33 @@
+/* NES-палитра, упрощённая. Цвета чуть приподняты по светлоте, чтобы не убивать контраст. */
+:root {
+  --nes-black: #0d0d0d;
+  --nes-bg: #101820;
+  --nes-bg-soft: #1a2230;
+  --nes-text: #e8e8e8;
+  --nes-text-dim: #9a9a9a;
+  --nes-border: #5a5a5a;
+  --nes-border-bright: #d8d8d8;
+
+  --nes-red: #d83018;
+  --nes-blue: #2068dc;
+  --nes-green: #38a050;
+  --nes-yellow: #f0c040;
+  --nes-cyan: #58c8f8;
+  --nes-magenta: #b048a0;
+  --nes-orange: #f08030;
+  --nes-grey: #787878;
+
+  --bot-color-0: var(--nes-red);
+  --bot-color-1: var(--nes-blue);
+  --bot-color-2: var(--nes-green);
+  --bot-color-3: var(--nes-yellow);
+  --bot-color-4: var(--nes-cyan);
+  --bot-color-5: var(--nes-magenta);
+  --bot-color-6: var(--nes-orange);
+  --bot-color-7: var(--nes-grey);
+
+  --font-display: 'Press Start 2P', monospace;
+  --font-text: 'VT323', 'Courier New', monospace;
+
+  --cell-size: 32px;
+}

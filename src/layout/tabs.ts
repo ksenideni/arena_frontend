@@ -16,6 +16,6 @@ export interface TabConfig {
 
 export const TABS: TabConfig[] = [
   { id: 'matches', label: 'Matches', to: '/matches', pathPrefix: '/match', enabled: true },
-  { id: 'leaderboard', label: 'Leaderboard', to: '/leaderboard', pathPrefix: '/leaderboard', enabled: false },
+  { id: 'leaderboard', label: 'Leaderboard', to: '/leaderboard', pathPrefix: '/leaderboard', enabled: true },
   { id: 'profile', label: 'Profile', to: '/profile', pathPrefix: '/profile', enabled: false },
 ]

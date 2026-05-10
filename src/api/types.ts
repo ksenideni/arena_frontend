@@ -57,3 +57,14 @@ export type WsMessage =
   | { type: 'history'; matchId: string; summary: MatchSummary; width: number; height: number; snapshots: MatchSnapshot[]; result: MatchResultDto | null }
   | { type: 'round'; matchId: string; snapshot: MatchSnapshot }
   | { type: 'finished'; matchId: string; result: MatchResultDto; finishedAt: string }
+
+export interface LeaderboardEntry {
+  player: string
+  gameId: string
+  matches: number
+  wins: number
+  draws: number
+  totalScore: number
+  avgScore: number
+  winRate: number
+}

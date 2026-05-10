@@ -1,4 +1,4 @@
-import type { MatchDetail, MatchSummary } from './types'
+import type { LeaderboardEntry, MatchDetail, MatchSummary } from './types'
 
 /**
  * Базовый URL бэкенда. Бэк деплоится отдельно — задавай через
@@ -19,6 +19,7 @@ async function getJson<T>(path: string): Promise<T> {
 export const api = {
   listMatches: (): Promise<MatchSummary[]> => getJson('/api/matches'),
   getMatch: (id: string): Promise<MatchDetail> => getJson(`/api/matches/${encodeURIComponent(id)}`),
+  leaderboard: (): Promise<LeaderboardEntry[]> => getJson('/api/leaderboard'),
 }
 
 /**

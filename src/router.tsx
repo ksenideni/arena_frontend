@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { LeaderboardPage } from './pages/LeaderboardPage'
 import { MatchPage } from './pages/MatchPage'
 import { MatchesPage } from './pages/MatchesPage'
 
@@ -14,6 +15,7 @@ export function AppRoutes() {
       <Route path="/" element={<Navigate to="/matches" replace />} />
       <Route path="/matches" element={<MatchesPage />} />
       <Route path="/match/:id" element={<MatchPage />} />
+      <Route path="/leaderboard" element={<LeaderboardPage />} />
       <Route path="*" element={<Navigate to="/matches" replace />} />
     </Routes>
   )

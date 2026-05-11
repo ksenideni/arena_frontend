@@ -1,4 +1,4 @@
-import type { LeaderboardEntry, MatchDetail, MatchSummary } from './types'
+import type { AuthResponse, LeaderboardEntry, MatchDetail, MatchSummary, Profile } from './types'
 
 /**
  * Базовый URL бэкенда. Бэк деплоится отдельно — задавай через
@@ -10,9 +10,41 @@ import type { LeaderboardEntry, MatchDetail, MatchSummary } from './types'
  */
 const API_BASE = (import.meta.env.VITE_API_BASE ?? '').replace(/\/+$/, '')
 
+/**
+ * JWT хранится в localStorage. Каждый запрос подмешивает Bearer-токен, если он есть.
+ * Для logout-а просто удаляем ключ.
+ */
+const TOKEN_KEY = 'arena.token'
+
+export const auth = {
+  getToken: (): string | null => localStorage.getItem(TOKEN_KEY),
+  setToken: (token: string | null) => {
+    if (token) localStorage.setItem(TOKEN_KEY, token)
+    else localStorage.removeItem(TOKEN_KEY)
+  },
+}
+
+function authHeaders(): HeadersInit {
+  const t = auth.getToken()
+  return t ? { Authorization: `Bearer ${t}` } : {}
+}
+
 async function getJson<T>(path: string): Promise<T> {
-  const res = await fetch(API_BASE + path)
+  const res = await fetch(API_BASE + path, { headers: authHeaders() })
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${path}`)
+  return (await res.json()) as T
+}
+
+async function postJson<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(API_BASE + path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) {
+    const text = await res.text().catch(() => '')
+    throw new Error(text || `${res.status} ${res.statusText}`)
+  }
   return (await res.json()) as T
 }
 
@@ -20,6 +52,12 @@ export const api = {
   listMatches: (): Promise<MatchSummary[]> => getJson('/api/matches'),
   getMatch: (id: string): Promise<MatchDetail> => getJson(`/api/matches/${encodeURIComponent(id)}`),
   leaderboard: (): Promise<LeaderboardEntry[]> => getJson('/api/leaderboard'),
+
+  login: (login: string, password: string): Promise<AuthResponse> =>
+    postJson('/api/auth/login', { login, password }),
+  register: (login: string, password: string, displayName?: string): Promise<AuthResponse> =>
+    postJson('/api/auth/register', { login, password, displayName }),
+  profile: (): Promise<Profile> => getJson('/api/me/profile'),
 }
 
 /**

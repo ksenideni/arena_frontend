@@ -68,3 +68,21 @@ export interface LeaderboardEntry {
   avgScore: number
   winRate: number
 }
+
+export interface AuthUser {
+  login: string
+  displayName: string
+  createdAt: string
+}
+
+export interface AuthResponse {
+  token: string
+  user: AuthUser
+}
+
+export interface Profile {
+  user: AuthUser
+  bots: string[]
+  stats: LeaderboardEntry[]
+  recentMatches: MatchSummary[]
+}

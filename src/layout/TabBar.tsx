@@ -1,8 +1,11 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../features/auth/AuthContext'
 import { TABS } from './tabs'
 
 export function TabBar() {
   const { pathname } = useLocation()
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
 
   return (
     <nav className="tabbar" role="tablist">
@@ -32,6 +35,26 @@ export function TabBar() {
           </Link>
         )
       })}
+      <div className="tabbar__spacer" />
+      {user ? (
+        <>
+          <span className="tabbar__user">@{user.login}</span>
+          <button
+            type="button"
+            className="tabbar__tab"
+            onClick={() => { logout(); navigate('/login') }}
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <Link
+          to="/login"
+          className={`tabbar__tab ${pathname === '/login' ? 'tabbar__tab--active' : ''}`}
+        >
+          Login
+        </Link>
+      )}
     </nav>
   )
 }

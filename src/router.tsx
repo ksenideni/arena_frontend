@@ -1,7 +1,9 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { LeaderboardPage } from './pages/LeaderboardPage'
+import { LoginPage } from './pages/LoginPage'
 import { MatchPage } from './pages/MatchPage'
 import { MatchesPage } from './pages/MatchesPage'
+import { ProfilePage } from './pages/ProfilePage'
 
 /**
  * Чтобы добавить новую вкладку (рейтинги, профили):
@@ -16,6 +18,8 @@ export function AppRoutes() {
       <Route path="/matches" element={<MatchesPage />} />
       <Route path="/match/:id" element={<MatchPage />} />
       <Route path="/leaderboard" element={<LeaderboardPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
       <Route path="*" element={<Navigate to="/matches" replace />} />
     </Routes>
   )

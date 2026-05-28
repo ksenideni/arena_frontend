@@ -1,4 +1,4 @@
-import type { AuthResponse, LeaderboardEntry, MatchDetail, MatchSummary, Profile } from './types'
+import type { AuthResponse, CompetitionPeriod, LeaderboardEntry, MatchDetail, MatchSummary, PeriodRating, Profile } from './types'
 
 /**
  * Базовый URL бэкенда. Бэк деплоится отдельно — задавай через
@@ -58,6 +58,9 @@ export const api = {
   register: (login: string, password: string, displayName?: string): Promise<AuthResponse> =>
     postJson('/api/auth/register', { login, password, displayName }),
   profile: (): Promise<Profile> => getJson('/api/me/profile'),
+
+  listPeriods: (): Promise<CompetitionPeriod[]> => getJson('/api/rating/periods'),
+  getPeriodRating: (id: string): Promise<PeriodRating> => getJson(`/api/rating/periods/${encodeURIComponent(id)}`),
 }
 
 /**

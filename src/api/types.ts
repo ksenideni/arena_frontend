@@ -86,3 +86,25 @@ export interface Profile {
   stats: LeaderboardEntry[]
   recentMatches: MatchSummary[]
 }
+
+export interface CompetitionPeriod {
+  id: string
+  name: string
+  periodUnit: string
+  periodsCount: number
+  startedAt: string
+}
+
+export interface BotPeriodRating {
+  bot: string
+  rTop: number
+  rWeighted: number
+  rElo: number
+  totalScore: number
+  rank: number
+}
+
+export interface PeriodRating {
+  period: CompetitionPeriod
+  ratings: BotPeriodRating[]
+}
